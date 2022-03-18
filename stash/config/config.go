@@ -21,6 +21,8 @@ type (
 		TimeZone      string `json:",optional"`
 		MaxChunkBytes int    `json:",default=15728640"` // default 15M
 		Compress      bool   `json:",default=false"`
+		UserName   string    `json:",default=elastic"`
+		PassWord   string    `json:",default=z123456"`
 	}
 
 	Filter struct {

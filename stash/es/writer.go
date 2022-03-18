@@ -27,6 +27,7 @@ func NewWriter(c config.ElasticSearchConf) (*Writer, error) {
 		elastic.SetSniff(false),
 		elastic.SetURL(c.Hosts...),
 		elastic.SetGzip(c.Compress),
+		elastic.SetBasicAuth(c.UserName,c.PassWord),
 	)
 	if err != nil {
 		return nil, err
@@ -39,7 +40,6 @@ func NewWriter(c config.ElasticSearchConf) (*Writer, error) {
 	writer.inserter = executors.NewChunkExecutor(writer.execute, executors.WithChunkBytes(c.MaxChunkBytes))
 	return &writer, nil
 }
-
 func (w *Writer) Write(index, val string) error {
 	return w.inserter.Add(valueWithIndex{
 		index: index,
